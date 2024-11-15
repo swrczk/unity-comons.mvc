@@ -1,6 +1,6 @@
 {
   "name": "com.swrczk.unity-commons.mvc",
-  "version": "1.0.0",
+  "version": "1.0.0-alpha.1",
   "displayName": "MVC implementation",
   "description": "Base MVC implementation",
   "unity": "2021.3",
