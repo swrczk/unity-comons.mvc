@@ -1,5 +1,4 @@
-﻿using Manager;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Commons.MVC
@@ -11,7 +10,7 @@ namespace Commons.MVC
 
         public virtual void ResolveContext()
         {
-            MvcIntegrationManager = Managers.Instance.GetManager<MvcIntegrationManager>();
+            MvcIntegrationManager = FindAnyObjectByType<MvcIntegrationManager>();
         }
 
         public BaseController AddView(IView view, Transform root)

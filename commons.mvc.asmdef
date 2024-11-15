@@ -9,5 +9,17 @@
   "precompiledReferences": [],
   "autoReferenced": true,
   "defineConstraints": [],
-  "versionDefines": []
+  "versionDefines": [],
+  "scopedRegistries": [
+    {
+      "name": "package.openupm.com",
+      "url": "https://package.openupm.com",
+      "scopes": [
+        "jp.hadashikick.vcontainer"
+      ]
+    }
+  ],
+  "dependencies": {
+    "jp.hadashikick.vcontainer": "1.14.0"
+  }
 }

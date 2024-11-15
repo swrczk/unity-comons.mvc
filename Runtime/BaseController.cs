@@ -1,5 +1,4 @@
 ﻿using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Commons.MVC
@@ -8,20 +7,27 @@ namespace Commons.MVC
         where TView : BaseView
         where TContext : BaseContext
     {
-        protected TView View;
-        protected TContext Context { get; private set; }
+        protected readonly TView View;
+        protected readonly TContext Context;
+        
+        public BaseController(TView View, TContext Context)
+        {
+            this.View = View;
+            this.Context = Context;
+            this.Context.ResolveContext();
+        }
 
         public override Type GetViewType()
         {
             return typeof(TView);
         }
 
-        public override void AssignView(IView baseView)
-        {
-            View = baseView as TView;
-            Context = this.GameObject().AddComponent<TContext>();
-            Context.ResolveContext();
-        }
+        // public override void AssignView(IView baseView)
+        // {
+        //     View = baseView as TView;
+        //     Context = gameObject.AddComponent<TContext>(); //to think about it
+        //     Context.ResolveContext();
+        // }
 
         public override void Setup()
         {
