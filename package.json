@@ -1,8 +1,8 @@
 {
-  "name": "com.swrczk.unity-commons.plugin1",
+  "name": "com.swrczk.unity-commons.mvc",
   "version": "1.0.0",
-  "displayName": "Games Plugin 1",
-  "description": "",
+  "displayName": "MVC implementation",
+  "description": "Base MVC implementation",
   "unity": "2021.3",
   "author": {
     "name": "swrczk",
@@ -10,6 +10,5 @@
     "url": "https://github.com/swrczk"
   },
   "dependencies": {
-    "com.unity.textmeshpro": "2.1.0"
   }
 }
