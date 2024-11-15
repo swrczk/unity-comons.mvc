@@ -1,40 +1,41 @@
 ﻿using UnityEngine;
 
-namespace Commons.MVC;
-
-public abstract class BaseView : MonoBehaviour, IView
+namespace Commons.MVC
 {
-    private void Start()
+    public abstract class BaseView : MonoBehaviour, IView
     {
-        RegisterEvents();
+        private void Start()
+        {
+            RegisterEvents();
+        }
+
+        private void OnDestroy()
+        {
+            UnregisterEvents();
+        }
+
+        protected virtual void RegisterEvents()
+        {
+        }
+
+        protected virtual void UnregisterEvents()
+        {
+        }
+
+        public virtual void Setup()
+        {
+        }
     }
 
-    private void OnDestroy()
-    {
-        UnregisterEvents();
-    }
-
-    protected virtual void RegisterEvents()
+    public abstract class BaseMainView : BaseView, IMainView
     {
     }
 
-    protected virtual void UnregisterEvents()
+    public interface IView
     {
     }
 
-    public virtual void Setup()
+    public interface IMainView
     {
     }
-}
-
-public abstract class BaseMainView : BaseView, IMainView
-{
-}
-
-public interface IView
-{
-}
-
-public interface IMainView
-{
 }

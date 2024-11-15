@@ -2,31 +2,32 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Commons.MVC;
-
-public abstract class BaseContext : MonoBehaviour, IContext
+namespace Commons.MVC
 {
-    public MvcIntegrationManager MvcIntegrationManager { get; private set; }
-
-
-    public virtual void ResolveContext()
+    public abstract class BaseContext : MonoBehaviour, IContext
     {
-        MvcIntegrationManager = Managers.Instance.GetManager<MvcIntegrationManager>();
+        public MvcIntegrationManager MvcIntegrationManager { get; private set; }
+
+
+        public virtual void ResolveContext()
+        {
+            MvcIntegrationManager = Managers.Instance.GetManager<MvcIntegrationManager>();
+        }
+
+        public BaseController AddView(IView view, Transform root)
+        {
+            var type = view.GetType();
+            return MvcIntegrationManager.CreateAndAssignViewController(type, root);
+        }
+
+        public void ChangeScene(string sceneName)
+        {
+            SceneManager.LoadScene(sceneName);
+        }
     }
 
-    public BaseController AddView(IView view, Transform root)
+    public interface IContext
     {
-        var type = view.GetType();
-        return MvcIntegrationManager.CreateAndAssignViewController(type, root);
+        public void ResolveContext();
     }
-    
-    public void ChangeScene(string sceneName)
-    {
-        SceneManager.LoadScene(sceneName);
-    }
-}
-
-public interface IContext
-{
-    public void ResolveContext();
 }

@@ -2,45 +2,46 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-namespace Commons.MVC;
-
-public abstract class BaseController<TView, TContext> : BaseController
-    where TView : BaseView
-    where TContext : BaseContext
+namespace Commons.MVC
 {
-    protected TView View  ;
-    protected TContext Context { get; private set; }
-
-    public override Type GetViewType()
+    public abstract class BaseController<TView, TContext> : BaseController
+        where TView : BaseView
+        where TContext : BaseContext
     {
-        return typeof(TView);
+        protected TView View;
+        protected TContext Context { get; private set; }
+
+        public override Type GetViewType()
+        {
+            return typeof(TView);
+        }
+
+        public override void AssignView(IView baseView)
+        {
+            View = baseView as TView;
+            Context = this.GameObject().AddComponent<TContext>();
+            Context.ResolveContext();
+        }
+
+        public override void Setup()
+        {
+            CreateDispatcher();
+            View.Setup();
+        }
+        protected virtual void CreateDispatcher() { }
     }
 
-    public override void AssignView(IView baseView)
+    public abstract class BaseController : MonoBehaviour, IController
     {
-        View = baseView as TView;
-        Context = this.GameObject().AddComponent<TContext>();
-        Context.ResolveContext();
+        public abstract void Setup();
+        public abstract Type GetViewType();
+        public abstract void AssignView(IView baseView);
     }
 
-    public override void Setup()
+    public interface IController
     {
-        CreateDispatcher();
-        View.Setup();
+        public void Setup();
+        public Type GetViewType();
+        public void AssignView(IView baseView);
     }
-    protected virtual void CreateDispatcher(){}
-}
-
-public abstract class BaseController : MonoBehaviour, IController
-{
-    public abstract void Setup();
-    public abstract Type GetViewType();
-    public abstract void AssignView(IView baseView);
-}
-
-public interface IController
-{
-    public void Setup();
-    public Type GetViewType();
-    public void AssignView(IView baseView);
 }
