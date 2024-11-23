@@ -3,18 +3,21 @@ using UnityEngine;
 
 namespace Commons.MVC
 {
-    public abstract class BaseController<TView, TContext> : BaseController
-        where TView : BaseView
-        where TContext : BaseContext
+    public abstract class BaseController<TView, TModel, TContext> : BaseController
+        where TView : IView
+        where TContext : IContext
+        where TModel : IModel
     {
         protected readonly TView View;
         protected readonly TContext Context;
-        
-        public BaseController(TView View, TContext Context)
+        protected readonly TModel Model;
+
+        public BaseController(TView view, TModel model, TContext context)
         {
-            this.View = View;
-            this.Context = Context;
-            this.Context.ResolveContext();
+            View = view;
+            Context = context;
+            Model = model;
+            Context.ResolveContext();
         }
 
         public override Type GetViewType()
@@ -32,9 +35,12 @@ namespace Commons.MVC
         public override void Setup()
         {
             CreateDispatcher();
-            View.Setup();
+            // View.Setup();
         }
-        protected virtual void CreateDispatcher() { }
+
+        protected virtual void CreateDispatcher()
+        {
+        }
     }
 
     public abstract class BaseController : MonoBehaviour, IController

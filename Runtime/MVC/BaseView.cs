@@ -2,11 +2,18 @@
 
 namespace Commons.MVC
 {
-    public abstract class BaseView : MonoBehaviour, IView
+    public abstract class BaseView<TModel> : MonoBehaviour, IView
+        where TModel : IModel
     {
+        protected TModel Model;
+
         private void Start()
         {
             RegisterEvents();
+        }
+        public virtual void Setup(TModel model)
+        {
+            Model = model;
         }
 
         private void OnDestroy()
@@ -22,12 +29,10 @@ namespace Commons.MVC
         {
         }
 
-        public virtual void Setup()
-        {
-        }
     }
 
-    public abstract class BaseMainView : BaseView, IMainView
+    public abstract class BaseMainView<TModel> : BaseView<TModel>, IMainView
+        where TModel : IModel
     {
     }
 
